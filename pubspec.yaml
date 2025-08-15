@@ -46,6 +46,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_native_splash: ^2.4.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -59,9 +60,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -88,3 +88,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  # Solid background color splash. We'll add an image once provided.
+  color: "#FFFFFF"
+  image: android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+  android_12:
+    color: "#FFFFFF"
+    image: android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png
+  # Uncomment and set your asset path when ready (must be a square PNG):
+  # image: assets/splash_icon.png
+  # android_12:
+  #   image: assets/splash_icon.png
