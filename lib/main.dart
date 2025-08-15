@@ -150,31 +150,43 @@ class _WebViewScreenState extends State<WebViewScreen> {
         ),
         body: Stack(
           children: [
-            RefreshIndicator(
-              color: const Color(0xFF34A21A),
-              backgroundColor: Colors.white,
-              onRefresh: () async {
-                await _controller.reload();
-                // Wait briefly to let the refresh indicator show.
-                await Future.delayed(const Duration(milliseconds: 300));
+            // Main WebView content (receives scroll gestures)
+            LayoutBuilder(
+              builder: (context, constraints) {
+                // Give WebView a bounded size equal to the viewport to
+                // prevent infinite height constraints in platform view.
+                return SizedBox(
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  child: SafeArea(
+                    child: WebViewWidget(controller: _controller),
+                  ),
+                );
               },
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  // Give WebView a bounded size equal to the viewport to
-                  // prevent infinite height constraints in platform view.
-                  return SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: SizedBox(
-                      height: constraints.maxHeight,
-                      width: constraints.maxWidth,
-                      child: SafeArea(
-                        child: WebViewWidget(controller: _controller),
-                      ),
-                    ),
-                  );
-                },
-              ),
             ),
+
+            // Narrow pull-to-refresh area overlayed at the top
+            // Positioned(
+            //   top: 0,
+            //   left: 0,
+            //   right: 0,
+            //   child: Container(
+            //     height: 175,
+            //     child: RefreshIndicator(
+            //       color: const Color(0xFF34A21A),
+            //       backgroundColor: Colors.white,
+            //       onRefresh: () async {
+            //         await _controller.reload();
+            //         await Future.delayed(const Duration(milliseconds: 300));
+            //       },
+            //       child: ListView(
+            //         physics: const AlwaysScrollableScrollPhysics(),
+            //         padding: EdgeInsets.zero,
+            //         children: const [SizedBox(height: 1)],
+            //       ),
+            //     ),
+            //   ),
+            // ),
             if (_showSplash)
               Positioned.fill(
                 child: Container(
@@ -185,7 +197,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       children: [
                         const Text(
                           'MachiNavi',
-                          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         const SizedBox(height: 16),
                         const SizedBox(
@@ -210,11 +225,18 @@ class _WebViewScreenState extends State<WebViewScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(Icons.wifi_off, size: 56, color: Colors.black54),
+                          const Icon(
+                            Icons.wifi_off,
+                            size: 56,
+                            color: Colors.black54,
+                          ),
                           const SizedBox(height: 12),
                           const Text(
                             'Something went wrong',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 6),
@@ -228,7 +250,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF34A21A),
                               foregroundColor: Colors.white,
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
+                              ),
                             ),
                             onPressed: _retry,
                             icon: const Icon(Icons.refresh),
