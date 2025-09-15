@@ -1,4 +1,4 @@
-package com.example.machi_navi
+package com.app.machinavi
 
 import io.flutter.embedding.android.FlutterActivity
 
